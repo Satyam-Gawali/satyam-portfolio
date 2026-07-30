@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
+/* Ensure every named section anchor clears the 64px fixed navbar */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
+@theme {
+  --font-sans: var(--font-plus-jakarta-sans);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --color-brand-bg: #050811; /* Near black / deep navy */
+  --color-brand-surface: #0b1120; /* Dark surface */
+  --color-brand-surface-card: #0d1527; /* Richer surface for cards */
+  --color-brand-surface-hover: #15223c; /* Hover card state */
+  --color-brand-border: #1e293b; /* Subtle border */
+  --color-brand-border-focus: #334155; /* Higher contrast border */
+
+  --color-brand-primary: #0ea5e9; /* Electric blue */
+  --color-brand-cyan: #06b6d4; /* Vibrant Cyan */
+  --color-brand-secondary: #818cf8; /* Subtle indigo */
+  --color-brand-text-primary: #f8fafc; /* Slate 50 */
+  --color-brand-text-secondary: #94a3b8; /* Slate 400 */
+  --color-brand-text-muted: #64748b; /* Slate 500 */
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #050811;
+  --foreground: #f8fafc;
+  --font-plus-jakarta-sans: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-jetbrains-mono: "Cascadia Code", "SFMono-Regular", Consolas, ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta-sans);
+  overflow-x: hidden;
+}
+
+/* Custom focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 4px;
+}
+
+/* Smooth scroll only for users who don't prefer reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+    /* Offset for the 64px fixed navbar so anchor targets aren't hidden behind it */
+    scroll-padding-top: 72px;
+  }
+}
+
+/* Selection highlight color */
+::selection {
+  background-color: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+}
+
+/* Hide scrollbars for chrome, safari and opera but allow scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbars for ie, edge and firefox but allow scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
