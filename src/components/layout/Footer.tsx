@@ -16,28 +16,32 @@ export const Footer: React.FC = () => {
     const element = document.getElementById(id);
     if (element) {
       e.preventDefault();
-      element.scrollIntoView({ behavior: "smooth" });
+      const navbarHeight = 80;
+      const elementTop = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: elementTop - navbarHeight, behavior: "smooth" });
     }
   };
 
   return (
     <footer className="w-full bg-brand-bg border-t border-brand-border py-12 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Brand Info */}
-        <div className="text-center md:text-left">
-          <div className="text-base font-bold text-brand-text-primary">
+        <div className="text-center md:text-left space-y-1">
+          <div className="text-sm font-bold text-brand-text-primary">
             Satyam Gawali
           </div>
-          <p className="text-xs text-brand-text-secondary mt-1 font-mono uppercase tracking-wider">
-            Mobile App Developer
+          <p className="text-xs text-brand-text-muted font-mono">
+            Flutter Developer & Mobile Engineer
           </p>
         </div>
 
         {/* Footer Navigation */}
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
           {[
             { label: "Work", id: "work" },
             { label: "Open Source", id: "open-source" },
+            { label: "Experience", id: "experience" },
+            { label: "Skills", id: "skills" },
             { label: "About", id: "about" },
             { label: "Contact", id: "contact" },
           ].map((item) => (
@@ -45,7 +49,7 @@ export const Footer: React.FC = () => {
               key={item.label}
               href={isHomePage ? `#${item.id}` : `/#${item.id}`}
               onClick={(e) => handleLinkClick(e, item.id)}
-              className="text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors duration-200"
+              className="text-xs font-medium text-brand-text-secondary hover:text-brand-text-primary transition-colors duration-200"
             >
               {item.label}
             </Link>
@@ -53,14 +57,14 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Social / Technical Details */}
-        <div className="flex flex-col items-center md:items-end space-y-2 text-xs text-brand-text-secondary font-mono">
+        <div className="flex flex-col items-center md:items-end space-y-1 text-xs text-brand-text-muted font-mono">
           <div className="flex space-x-4">
             {links.github && (
               <a
                 href={links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-brand-cyan transition-colors"
+                className="hover:text-brand-text-primary transition-colors"
               >
                 GitHub
               </a>
@@ -70,14 +74,14 @@ export const Footer: React.FC = () => {
                 href={links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-brand-cyan transition-colors"
+                className="hover:text-brand-text-primary transition-colors"
               >
                 LinkedIn
               </a>
             )}
           </div>
-          <div className="text-brand-text-muted">
-            &copy; {currentYear} • Built with Next.js
+          <div>
+            &copy; {currentYear} Satyam Gawali
           </div>
         </div>
       </div>

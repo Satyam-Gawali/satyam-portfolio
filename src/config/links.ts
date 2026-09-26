@@ -17,6 +17,10 @@ export interface ExternalLinks {
   clvcaWeb: string | null;
   clvcaPlayStore: string | null;
 
+  // Promptixa Links
+  promptixaWeb: string | null;
+  promptixaPlayStore: string | null;
+
   // Other Projects
   expenseTrackerRepo: string | null;
   whoKnowsSagarRepo: string | null;
@@ -40,11 +44,15 @@ export const links: ExternalLinks = {
   chromaThemePub: "https://pub.dev/packages/chroma_theme",
   
   // CLVCA
-  clvcaWeb: "https://satyam-gawali.github.io/clvca",
+  clvcaWeb: "https://satyam-gawali.github.io/clvca-app",
   clvcaPlayStore: "https://play.google.com/store/apps/details?id=com.satyamstudios.clvca",
 
+  // Promptixa
+  promptixaWeb: "https://satyam-gawali.github.io/promptixa-web/",
+  promptixaPlayStore: "https://play.google.com/store/apps/details?id=com.promptixa.app",
+
   // Other Projects
-  expenseTrackerRepo: "https://github.com/Satyam-Gawali/expense-tracker-flutter", // Tuzi exact expense tracker repo link asel tr update kru shaktoes
+  expenseTrackerRepo: "https://github.com/Satyam-Gawali/expense-tracker-flutter",
   whoKnowsSagarRepo: "https://github.com/Satyam-Gawali/who-knows-sagar",
   bmiCalculatorRepo: "https://github.com/Satyam-Gawali/bmi-calculator",
 };

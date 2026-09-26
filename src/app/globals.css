@@ -1,46 +1,111 @@
 @import "tailwindcss";
 
-/* Ensure every named section anchor clears the 64px fixed navbar */
+/* Ensure every named section anchor clears the fixed navbar */
 section[id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 80px;
 }
 
 @theme {
-  --font-sans: var(--font-plus-jakarta-sans);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-plus-jakarta-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "SFMono-Regular", Consolas, monospace;
 
-  --color-brand-bg: #050811; /* Near black / deep navy */
-  --color-brand-surface: #0b1120; /* Dark surface */
-  --color-brand-surface-card: #0d1527; /* Richer surface for cards */
-  --color-brand-surface-hover: #15223c; /* Hover card state */
-  --color-brand-border: #1e293b; /* Subtle border */
-  --color-brand-border-focus: #334155; /* Higher contrast border */
+  /* Theme Tokens mapped to CSS variables */
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-surface-card: var(--brand-surface-card);
+  --color-brand-surface-hover: var(--brand-surface-hover);
+  --color-brand-border: var(--brand-border);
+  --color-brand-border-focus: var(--brand-border-focus);
 
-  --color-brand-primary: #0ea5e9; /* Electric blue */
-  --color-brand-cyan: #06b6d4; /* Vibrant Cyan */
-  --color-brand-secondary: #818cf8; /* Subtle indigo */
-  --color-brand-text-primary: #f8fafc; /* Slate 50 */
-  --color-brand-text-secondary: #94a3b8; /* Slate 400 */
-  --color-brand-text-muted: #64748b; /* Slate 500 */
+  /* Editorial Accents */
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-violet-light: var(--brand-violet-light);
+  --color-brand-indigo: var(--brand-indigo);
+  --color-brand-cyan: #06b6d4;
+  --color-brand-primary: var(--brand-violet);
+  --color-brand-secondary: #06b6d4;
+
+  /* Text Contrast Hierarchy */
+  --color-brand-text-primary: var(--brand-text-primary);
+  --color-brand-text-secondary: var(--brand-text-secondary);
+  --color-brand-text-muted: var(--brand-text-muted);
+
+  /* Utility tokens */
+  --color-brand-pill-bg: var(--brand-pill-bg);
+  --color-brand-pill-border: var(--brand-pill-border);
+  --color-brand-card-border: var(--brand-card-border);
+  --color-brand-primary-btn-bg: var(--brand-primary-btn-bg);
+  --color-brand-primary-btn-text: var(--brand-primary-btn-text);
+  --color-brand-nav-bg: var(--brand-nav-bg);
+  --color-brand-card-bg-gradient-from: var(--brand-card-bg-gradient-from);
+  --color-brand-card-bg-gradient-to: var(--brand-card-bg-gradient-to);
 }
 
-:root {
-  --background: #050811;
-  --foreground: #f8fafc;
-  --font-plus-jakarta-sans: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-  --font-jetbrains-mono: "Cascadia Code", "SFMono-Regular", Consolas, ui-monospace, monospace;
+/* Default Dark Mode */
+:root,
+.dark {
+  --brand-bg: #09090b;
+  --brand-surface: #111116;
+  --brand-surface-card: #15151c;
+  --brand-surface-hover: #1c1c26;
+  --brand-border: #22222e;
+  --brand-border-focus: #353547;
+  --brand-text-primary: #fafafa;
+  --brand-text-secondary: #a1a1aa;
+  --brand-text-muted: #71717a;
+
+  --brand-violet: #8b5cf6;
+  --brand-violet-light: #a78bfa;
+  --brand-indigo: #6366f1;
+
+  --brand-pill-bg: rgba(255, 255, 255, 0.04);
+  --brand-pill-border: rgba(255, 255, 255, 0.08);
+  --brand-card-border: rgba(255, 255, 255, 0.08);
+  --brand-primary-btn-bg: #fafafa;
+  --brand-primary-btn-text: #09090b;
+  --brand-nav-bg: rgba(17, 17, 22, 0.85);
+  --brand-card-bg-gradient-from: #15151c;
+  --brand-card-bg-gradient-to: #111116;
+}
+
+/* Light Mode */
+.light {
+  --brand-bg: #f8fafc;
+  --brand-surface: #ffffff;
+  --brand-surface-card: #ffffff;
+  --brand-surface-hover: #f1f5f9;
+  --brand-border: #e2e8f0;
+  --brand-border-focus: #cbd5e1;
+  --brand-text-primary: #0f172a;
+  --brand-text-secondary: #475569;
+  --brand-text-muted: #64748b;
+
+  --brand-violet: #7c3aed;
+  --brand-violet-light: #6d28d9;
+  --brand-indigo: #4f46e5;
+
+  --brand-pill-bg: rgba(15, 23, 42, 0.04);
+  --brand-pill-border: rgba(15, 23, 42, 0.08);
+  --brand-card-border: rgba(15, 23, 42, 0.08);
+  --brand-primary-btn-bg: #0f172a;
+  --brand-primary-btn-text: #ffffff;
+  --brand-nav-bg: rgba(255, 255, 255, 0.88);
+  --brand-card-bg-gradient-from: #ffffff;
+  --brand-card-bg-gradient-to: #f8fafc;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-plus-jakarta-sans);
+  background-color: var(--brand-bg);
+  color: var(--brand-text-primary);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  letter-spacing: -0.01em;
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Custom focus states for accessibility */
 *:focus-visible {
-  outline: 2px solid #06b6d4;
+  outline: 2px solid var(--brand-violet);
   outline-offset: 4px;
 }
 
@@ -48,23 +113,37 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
-    /* Offset for the 64px fixed navbar so anchor targets aren't hidden behind it */
-    scroll-padding-top: 72px;
+    scroll-padding-top: 80px;
   }
 }
 
 /* Selection highlight color */
 ::selection {
-  background-color: rgba(6, 182, 212, 0.2);
-  color: #06b6d4;
+  background-color: rgba(139, 92, 246, 0.25);
+  color: var(--brand-violet);
+}
+
+/* Glass & Bento utility classes */
+.bento-card {
+  background: var(--brand-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--brand-card-border);
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover {
+  background: var(--brand-surface-hover);
+  border-color: var(--brand-border-focus);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 25px -5px rgba(139, 92, 246, 0.08);
 }
 
 /* Hide scrollbars for chrome, safari and opera but allow scrolling */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-/* Hide scrollbars for ie, edge and firefox but allow scrolling */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

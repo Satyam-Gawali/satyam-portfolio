@@ -2,13 +2,13 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Cpu } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ExternalLink, Globe, CheckCircle2 } from "lucide-react";
 import { projects } from "@/data/projects";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { TechBadge } from "@/components/ui/TechBadge";
 import { ScreenshotCarousel } from "@/components/ui/ScreenshotCarousel";
-import { GithubIcon } from "@/components/ui/Icons";
+import { GithubIcon, GooglePlayIcon } from "@/components/ui/Icons";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -31,21 +31,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  // Cover images array (jar 'coverImages' nsel tar 'imageUrl' vaprel)
+  // Cover images array
   const coverImages = project.coverImages ?? [project.imageUrl];
 
   return (
     <>
       <Navbar />
       <main className="flex-1 pt-32 pb-24 px-6 bg-brand-bg relative">
-        <div className="max-w-7xl mx-auto space-y-12">
+        {/* Subtle ambient lighting */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-violet/5 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto space-y-12">
           {/* Back button */}
           <Link
             href="/#work"
-            className="inline-flex items-center space-x-2 text-sm font-semibold text-brand-text-secondary hover:text-brand-cyan transition-colors group"
+            className="inline-flex items-center space-x-2 text-xs font-semibold text-brand-text-secondary hover:text-brand-text-primary transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Work</span>
+            <span>Back to Selected Work</span>
           </Link>
 
           {/* ROW 1: Two Columns — Left Content (~65%), Right Stacked Cover Images (~35%) */}
@@ -58,7 +61,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {project.badges?.map((badge) => (
                     <span
                       key={badge}
-                      className="px-2.5 py-1 rounded bg-brand-cyan/10 border border-brand-cyan/20 text-[10px] font-semibold uppercase tracking-wider text-brand-cyan"
+                      className="px-3 py-1 rounded-full bg-brand-violet/10 border border-brand-violet/25 text-[10px] font-mono font-semibold uppercase tracking-wider text-brand-violet-light"
                     >
                       {badge}
                     </span>
@@ -66,10 +69,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-4xl md:text-5xl font-extrabold text-brand-text-primary tracking-tight">
+                  <h1 className="text-4xl sm:text-5xl font-extrabold text-brand-text-primary tracking-tight font-sans">
                     {project.title}
                   </h1>
-                  <p className="text-lg font-mono text-brand-cyan uppercase tracking-widest">
+                  <p className="text-base font-mono text-brand-violet-light uppercase tracking-widest">
                     {project.subtitle}
                   </p>
                 </div>
@@ -78,8 +81,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {project.description}
                 </p>
 
+                {/* Metrics Summary if available */}
+                {project.metrics && project.metrics.length > 0 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
+                    {project.metrics.map((metric) => (
+                      <div
+                        key={metric.label}
+                        className="p-3.5 rounded-2xl bg-brand-surface/80 border border-brand-card-border shadow-md"
+                      >
+                        <div className="text-base sm:text-lg font-bold text-brand-text-primary font-mono">
+                          {metric.value}
+                        </div>
+                        <div className="text-xs text-brand-text-muted mt-0.5">
+                          {metric.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* Tech Stack */}
-                <div className="space-y-2 pt-2">
+                <div className="space-y-2.5 pt-2">
                   <div className="text-xs font-mono text-brand-text-muted uppercase tracking-wider">
                     Technologies Used:
                   </div>
@@ -91,40 +113,61 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-wrap items-center gap-4 pt-2">
+                <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                  {project.playStoreUrl && (
+                    <a
+                      href={project.playStoreUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-brand-primary-btn-bg text-brand-primary-btn-text text-xs font-bold hover:opacity-90 transition-all shadow-lg shadow-black/5 dark:shadow-white/5"
+                    >
+                      <GooglePlayIcon className="w-3.5 h-3.5" />
+                      <span>View on Google Play</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {project.webUrl && (
+                    <a
+                      href={project.webUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-full bg-brand-pill-bg border border-brand-pill-border text-xs font-semibold text-brand-text-secondary hover:text-brand-text-primary hover:bg-brand-surface-hover transition-all"
+                    >
+                      <Globe className="w-3.5 h-3.5 text-brand-cyan" />
+                      <span>Visit Website</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {!project.playStoreUrl && !project.webUrl && project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-brand-primary-btn-bg text-brand-primary-btn-text text-xs font-bold hover:opacity-90 transition-all shadow-lg shadow-black/5 dark:shadow-white/5"
+                    >
+                      <span>Live Demo</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-brand-surface border border-brand-border text-sm font-semibold text-brand-text-primary hover:border-brand-cyan/40 hover:text-brand-cyan transition-all"
+                      className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-full bg-brand-pill-bg border border-brand-pill-border text-xs font-semibold text-brand-text-secondary hover:text-brand-text-primary hover:bg-brand-surface-hover transition-all"
                     >
-                      <GithubIcon className="w-4 h-4" />
+                      <GithubIcon className="w-3.5 h-3.5" />
                       <span>View Source Code</span>
-                    </a>
-                  )}
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-brand-cyan text-brand-bg text-sm font-bold hover:bg-brand-cyan/95 transition-all shadow-lg shadow-brand-cyan/10"
-                    >
-                      <Cpu className="w-4 h-4" />
-                      <span>
-                        {project.slug === "clvca" ? "Get on Google Play" : "Live Demo"}
-                      </span>
-                      <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
                 </div>
               </div>
 
               {/* Overview & Case Study Content */}
-              <div className="space-y-8 pt-6 border-t border-brand-border/40">
+              <div className="space-y-8 pt-8 border-t border-brand-border">
                 {project.problem && (
                   <section className="space-y-3">
-                    <h2 className="text-xl md:text-2xl font-bold text-brand-text-primary">
+                    <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
                       The Problem
                     </h2>
                     <p className="text-base text-brand-text-secondary leading-relaxed">
@@ -135,7 +178,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
                 {project.solution && (
                   <section className="space-y-3">
-                    <h2 className="text-xl md:text-2xl font-bold text-brand-text-primary">
+                    <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
                       The Solution
                     </h2>
                     <p className="text-base text-brand-text-secondary leading-relaxed">
@@ -145,17 +188,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 )}
 
                 <section className="space-y-4">
-                  <h2 className="text-xl md:text-2xl font-bold text-brand-text-primary">
-                    Engineering Highlights
+                  <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
+                    Engineering Highlights & Architecture
                   </h2>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {project.features.map((feature, idx) => (
                       <li
                         key={idx}
-                        className="p-3.5 rounded-xl bg-brand-surface/60 border border-brand-border flex items-start space-x-3"
+                        className="p-4 rounded-2xl bg-brand-surface/80 border border-brand-card-border flex items-start space-x-3 shadow-sm"
                       >
-                        <span className="w-2 h-2 rounded-full bg-brand-cyan mt-1.5 shrink-0"></span>
-                        <span className="text-sm text-brand-text-secondary leading-relaxed">
+                        <CheckCircle2 className="w-4 h-4 text-brand-violet-light mt-0.5 shrink-0" />
+                        <span className="text-xs sm:text-sm text-brand-text-secondary leading-relaxed">
                           {feature}
                         </span>
                       </li>
@@ -165,7 +208,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
                 {project.challenges && (
                   <section className="space-y-3">
-                    <h2 className="text-xl md:text-2xl font-bold text-brand-text-primary">
+                    <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
                       Technical Challenges
                     </h2>
                     <p className="text-base text-brand-text-secondary leading-relaxed">
@@ -176,8 +219,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
                 {project.outcome && (
                   <section className="space-y-3">
-                    <h2 className="text-xl md:text-2xl font-bold text-brand-text-primary">
-                      Project Outcome
+                    <h2 className="text-xl sm:text-2xl font-bold text-brand-text-primary tracking-tight">
+                      Project Outcome & Production Quality
                     </h2>
                     <p className="text-base text-brand-text-secondary leading-relaxed">
                       {project.outcome}
@@ -187,13 +230,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             </div>
 
-            {/* RIGHT COLUMN (~35%): Stacked Images with Precise Cascading Hover Fade */}
+            {/* RIGHT COLUMN (~35%): Stacked Images with Cascading Hover Fade */}
             <div className="lg:col-span-5 flex justify-center lg:justify-center w-full pt-10">
               <div className="sticky top-28 w-full flex items-center justify-center h-[380px] sm:h-[420px] relative group/stack">
                 {coverImages.map((imgSrc, index) => {
                   const isFront = index === 0;
                   
-                  // Exact original diagonal stack composition rules (diagonal offset + rotation + scale)
                   let stackStyles = "scale-100 translate-x-0 translate-y-0 rotate-0";
                   if (index === 1) {
                     stackStyles = "scale-[0.89] translate-x-12 -translate-y-6 rotate-[7deg]";
@@ -201,13 +243,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     stackStyles = "scale-[0.80] translate-x-24 -translate-y-12 rotate-[14deg]";
                   }
 
-                  // Default base z-index and opacity based on initial stack order
                   const defaultState = index === 0 ? "z-30 opacity-100" : index === 1 ? "z-20 opacity-100" : "z-10 opacity-100";
-                  // index === 0 ? "z-30 opacity-100" : (index === 1 ? "z-20 opacity-45" : "z-10 opacity-25");
 
-                  // Cascading hover fading logic matching the requested specification:
-                  // Hovering Image 2 (index 1) fades Image 1 (index 0) to 20%
-                  // Hovering Image 3 (index 2) fades Image 1 (index 0) and Image 2 (index 1) to 20%
                   let hoverState = "";
                   if (index === 0) {
                     hoverState = "group-has-[.img-idx-1:hover]/stack:opacity-20 group-has-[.img-idx-2:hover]/stack:opacity-20";
@@ -238,7 +275,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
           </div>
 
-          <hr className="border-brand-border/40 my-12" />
+          <hr className="border-brand-border my-12" />
 
           {/* ROW 2: Full Width Project Screenshot Gallery */}
           <div className="w-full">

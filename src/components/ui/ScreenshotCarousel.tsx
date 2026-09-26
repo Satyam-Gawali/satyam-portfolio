@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Project } from "@/data/projects";
@@ -41,7 +41,7 @@ export function ScreenshotCarousel({ project }: { project: Project }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const screenshots = project.screenshots ?? [];
+  const screenshots = useMemo(() => project.screenshots ?? [], [project.screenshots]);
 
   const checkScroll = () => {
     if (!scrollRef.current) return;

@@ -27,57 +27,95 @@ export function ProjectVisual({ project, variant = "featured", className = "" }:
   const screens = project.screenshots ?? [];
 
   // ─── CLVCA (FLAGSHIP) ──────────────────────────────────────────────────────
-if (project.slug === "clvca") {
-  const primaryPhone =
-    screens.find((s) => s.src.includes("cover")) ?? {
-      src: "/images/projects/clvca/cover.png",
-      alt: "CLVCA UI",
-    };
+  if (project.slug === "clvca") {
+    const primaryPhone =
+      screens.find((s) => s.src.includes("cover")) ?? {
+        src: "/images/projects/clvca/cover.png",
+        alt: "CLVCA UI",
+      };
 
-  const secondaryPhone =
-    screens.find((s) => s.src.includes("p2p-chat")) ?? primaryPhone;
+    const secondaryPhone =
+      screens.find((s) => s.src.includes("p2p-chat")) ?? primaryPhone;
 
-  if (variant === "hero") {
+    if (variant === "hero") {
+      return (
+        <div
+          className={`relative w-full flex items-center justify-center mx-auto ${className}`}
+        >
+          <div className="w-full max-w-[15rem]">
+            <Screen
+              src={primaryPhone.src}
+              alt={primaryPhone.alt}
+              className="w-full"
+            />
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div
         className={`relative w-full flex items-center justify-center mx-auto ${className}`}
       >
-        <div className="w-full max-w-[15rem]">
+        <div
+          className="relative w-full max-w-[20rem]"
+          style={{ paddingBottom: "3.5rem" }}
+        >
           <Screen
             src={primaryPhone.src}
             alt={primaryPhone.alt}
-            className="w-full"
+            className="relative z-10 w-[70%]"
           />
+
+          <div className="absolute top-[8%] right-0 w-[56%] rotate-[5deg] z-0">
+            <Screen
+              src={secondaryPhone.src}
+              alt={secondaryPhone.alt}
+              className="w-full"
+            />
+          </div>
         </div>
       </div>
     );
   }
 
-  return (
-    <div
-      className={`relative w-full flex items-center justify-center mx-auto ${className}`}
-    >
-      <div
-        className="relative w-full max-w-[20rem]"
-        style={{ paddingBottom: "3.5rem" }}
-      >
-        <Screen
-          src={primaryPhone.src}
-          alt={primaryPhone.alt}
-          className="relative z-10 w-[70%]"
-        />
+  // ─── PROMPTIXA ─────────────────────────────────────────────────────────────
+  if (project.slug === "promptixa") {
+    const primaryPhone = {
+      src: "/images/projects/promptixa/1.png",
+      alt: "Promptixa home discovery feed",
+    };
 
-        <div className="absolute top-[8%] right-0 w-[56%] rotate-[5deg] z-0">
+    const secondaryPhone = {
+      src: "/images/projects/promptixa/3.png",
+      alt: "Promptixa prompt details and variable customization",
+    };
+
+    return (
+      <div
+        className={`relative w-full flex items-center justify-center mx-auto ${className}`}
+      >
+        <div
+          className="relative w-full max-w-[19.5rem]"
+          style={{ paddingBottom: "3.5rem" }}
+        >
           <Screen
-            src={secondaryPhone.src}
-            alt={secondaryPhone.alt}
-            className="w-full"
+            src={primaryPhone.src}
+            alt={primaryPhone.alt}
+            className="relative z-10 w-[70%]"
           />
+
+          <div className="absolute top-[10%] right-0 w-[56%] rotate-[5deg] z-0">
+            <Screen
+              src={secondaryPhone.src}
+              alt={secondaryPhone.alt}
+              className="w-full"
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   // ─── WHO KNOWS SAGAR ───────────────────────────────────────────────────────
   if (project.slug === "who-knows-sagar") {

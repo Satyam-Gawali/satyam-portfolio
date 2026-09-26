@@ -2,18 +2,28 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowDown, Send } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { profile } from "@/data/profile";
 import { links } from "@/config/links";
 import { HeroVisual } from "@/components/ui/HeroVisual";
 
 export const Hero: React.FC = () => {
-  const handleScrollToWork = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleScrollToWork = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     e.preventDefault();
     const element = document.getElementById("work");
     if (element) {
-      const navbarHeight = 72;
+      const navbarHeight = 80;
+      const elementTop = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: elementTop - navbarHeight, behavior: "smooth" });
+    }
+  };
+
+  const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const element = document.getElementById("contact");
+    if (element) {
+      const navbarHeight = 80;
       const elementTop = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: elementTop - navbarHeight, behavior: "smooth" });
     }
@@ -22,103 +32,96 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-24 pb-16 flex items-center justify-center overflow-hidden px-6"
+      className="relative min-h-[92vh] pt-32 pb-20 flex items-center justify-center overflow-hidden px-6"
     >
-      {/* Background visual accents */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-brand-secondary/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-brand-violet/8 rounded-full blur-[140px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[300px] bg-brand-cyan/6 rounded-full blur-[120px] -z-10 pointer-events-none" />
 
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        {/* Text column — content is always visible; motion adds enhancement on top */}
-        <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
-          {/* Eyebrow Status */}
+      <div className="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        {/* Text column — Editorial Hierarchy */}
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-7">
+          {/* Status Badge */}
           <motion.div
-            initial={false}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ opacity: 1 }}
-            transition={{ duration: 0.45 }}
-            className="inline-flex items-center space-x-2 w-fit px-3 py-1 rounded-full bg-brand-surface border border-brand-border"
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center space-x-2.5 w-fit px-3.5 py-1.5 rounded-full bg-brand-pill-bg border border-brand-pill-border backdrop-blur-md"
           >
-            <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-            <span className="text-xs font-mono font-medium tracking-wide text-brand-cyan uppercase">
-              Mobile App Developer
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs font-mono font-medium tracking-wide text-brand-text-secondary">
+              Flutter Developer & Product Builder
             </span>
           </motion.div>
 
-          {/* Heading — always visible; motion provides subtle entrance */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-text-primary leading-[1.1] font-sans">
+          {/* Large Editorial Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-text-primary leading-[1.08] font-sans">
             <motion.span
               className="block"
-              initial={false}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              style={{ opacity: 1 }}
               transition={{ duration: 0.45, delay: 0.05 }}
             >
-              Building mobile
+              Building mobile apps
             </motion.span>
             <motion.span
               className="block"
-              initial={false}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              style={{ opacity: 1 }}
               transition={{ duration: 0.45, delay: 0.1 }}
             >
-              experiences that{" "}
-              <span className="bg-gradient-to-r from-brand-cyan via-brand-primary to-brand-secondary bg-clip-text text-transparent">
-                solve real problems
+              with{" "}
+              <span className="bg-gradient-to-r from-brand-text-primary via-brand-violet to-brand-cyan bg-clip-text text-transparent">
+                precision & craft.
               </span>
             </motion.span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle / Bio */}
           <motion.p
-            initial={false}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ opacity: 1 }}
             transition={{ duration: 0.45, delay: 0.15 }}
-            className="text-base sm:text-lg lg:text-xl text-brand-text-secondary leading-relaxed max-w-2xl font-sans"
+            className="text-base sm:text-lg text-brand-text-secondary leading-relaxed max-w-xl font-sans"
           >
             {profile.bio}
           </motion.p>
 
-          {/* Actions */}
+          {/* CTAs & Socials */}
           <motion.div
-            initial={false}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ opacity: 1 }}
             transition={{ duration: 0.45, delay: 0.2 }}
-            className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2"
+            className="flex flex-wrap items-center gap-4 pt-2"
           >
             <button
               onClick={handleScrollToWork}
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-brand-cyan text-brand-bg font-bold hover:bg-brand-cyan/90 transition-all duration-200 shadow-lg shadow-brand-cyan/15 group cursor-pointer"
+              className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-full bg-brand-primary-btn-bg text-brand-primary-btn-text font-bold text-sm hover:opacity-90 transition-all duration-200 shadow-xl shadow-black/5 dark:shadow-white/5 group cursor-pointer"
             >
-              <span>View My Work</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>Explore Selected Work</span>
+              <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </button>
 
-            {links.resume && (
-              <a
-                href={links.resume}
-                download
-                className="inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-brand-surface border border-brand-border font-bold text-brand-text-primary hover:bg-brand-surface-hover hover:border-brand-border-focus transition-all duration-200"
-              >
-                <Download className="w-4 h-4 text-brand-cyan" />
-                <span>Download Resume</span>
-              </a>
-            )}
+            <a
+              href="#contact"
+              onClick={handleScrollToContact}
+              className="inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-full bg-brand-pill-bg border border-brand-pill-border font-semibold text-sm text-brand-text-primary hover:bg-brand-surface-hover hover:border-brand-border-focus transition-all duration-200"
+            >
+              <Send className="w-4 h-4 text-brand-violet-light" />
+              <span>Get In Touch</span>
+            </a>
 
             {/* Social Icons */}
-            <div className="flex items-center space-x-2 sm:ml-2">
+            <div className="flex items-center space-x-2 ml-1">
               {links.github && (
                 <a
                   href={links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-xl bg-brand-surface border border-brand-border hover:bg-brand-surface-hover hover:border-brand-border-focus text-brand-text-secondary hover:text-brand-text-primary transition-all duration-200"
+                  className="p-3 rounded-full bg-brand-pill-bg border border-brand-pill-border hover:bg-brand-surface-hover hover:text-brand-text-primary text-brand-text-secondary transition-all duration-200"
                   aria-label="GitHub Profile"
                 >
-                  <GithubIcon className="w-5 h-5" />
+                  <GithubIcon className="w-4 h-4" />
                 </a>
               )}
               {links.linkedin && (
@@ -126,17 +129,17 @@ export const Hero: React.FC = () => {
                   href={links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-xl bg-brand-surface border border-brand-border hover:bg-brand-surface-hover hover:border-brand-border-focus text-brand-text-secondary hover:text-brand-text-primary transition-all duration-200"
+                  className="p-3 rounded-full bg-brand-pill-bg border border-brand-pill-border hover:bg-brand-surface-hover hover:text-brand-text-primary text-brand-text-secondary transition-all duration-200"
                   aria-label="LinkedIn Profile"
                 >
-                  <LinkedinIcon className="w-5 h-5" />
+                  <LinkedinIcon className="w-4 h-4" />
                 </a>
               )}
             </div>
           </motion.div>
         </div>
 
-        {/* Visual column — replaced mobile mockup with abstract premium HeroVisual */}
+        {/* Visual column — Refined HeroVisual */}
         <div className="lg:col-span-5 flex justify-center lg:justify-end">
           <HeroVisual />
         </div>

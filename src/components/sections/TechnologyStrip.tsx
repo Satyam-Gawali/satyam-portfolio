@@ -8,32 +8,32 @@ interface TechItemProps {
 
 const TechItem: React.FC<TechItemProps> = ({ name, icon }) => {
   return (
-    <div className="flex items-center space-x-2.5 px-4 py-2 bg-brand-surface/40 border border-brand-border/40 rounded-xl hover:border-brand-cyan/20 transition-colors duration-200">
-      <span className="text-brand-cyan/70">{icon}</span>
-      <span className="text-sm font-semibold tracking-wide text-brand-text-primary">{name}</span>
+    <div className="flex items-center space-x-2 px-3.5 py-1.5 bg-brand-pill-bg border border-brand-pill-border rounded-full hover:border-brand-border-focus hover:bg-brand-surface-hover transition-all duration-200">
+      <span className="text-brand-violet-light">{icon}</span>
+      <span className="text-xs font-mono font-medium tracking-wide text-brand-text-secondary">{name}</span>
     </div>
   );
 };
 
 export const TechnologyStrip: React.FC = () => {
   const techStack = [
-    { name: "Flutter", icon: <Layers className="w-4 h-4" /> },
-    { name: "Dart", icon: <Terminal className="w-4 h-4" /> },
-    { name: "Firebase", icon: <Database className="w-4 h-4" /> },
-    { name: "Riverpod", icon: <Cpu className="w-4 h-4" /> },
-    { name: "REST APIs", icon: <Globe className="w-4 h-4" /> },
-    { name: "Open Source", icon: <Radio className="w-4 h-4" /> },
+    { name: "Flutter 3.x", icon: <Layers className="w-3.5 h-3.5" /> },
+    { name: "Dart", icon: <Terminal className="w-3.5 h-3.5" /> },
+    { name: "Riverpod", icon: <Cpu className="w-3.5 h-3.5" /> },
+    { name: "Firebase & Firestore", icon: <Database className="w-3.5 h-3.5" /> },
+    { name: "REST APIs & P2P", icon: <Globe className="w-3.5 h-3.5" /> },
+    { name: "Hive & SQLite", icon: <Radio className="w-3.5 h-3.5" /> },
   ];
 
   return (
-    <section className="w-full bg-brand-bg py-8 border-y border-brand-border/50">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+    <div className="w-full bg-brand-bg py-6 border-y border-brand-border">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5">
           {techStack.map((tech) => (
             <TechItem key={tech.name} name={tech.name} icon={tech.icon} />
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };

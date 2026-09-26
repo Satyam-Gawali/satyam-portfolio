@@ -8,10 +8,12 @@ export interface Project {
   technologies: string[];
   features: string[];
   imageUrl: string;
-  coverImages?: string[]; // Multiple cover images sathi stacked effect saathi
+  coverImages?: string[]; // Multiple cover images for stacked diagonal hover effect
   screenshots?: { src: string; alt: string }[];
   githubUrl: string | null;
   liveUrl: string | null;
+  playStoreUrl?: string | null;
+  webUrl?: string | null;
   hasCaseStudy: boolean;
   problem?: string | null;
   solution?: string | null;
@@ -22,6 +24,63 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    slug: "promptixa",
+    title: "Promptixa",
+    subtitle: "AI Prompt Community",
+    description: "A Flutter-based AI prompt community platform for discovering, customizing, sharing, and managing AI prompts.",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Riverpod",
+      "Cloud Firestore",
+      "Firebase Auth",
+      "Google Mobile Ads",
+      "Hive",
+      "Cloudinary",
+      "GoRouter"
+    ],
+    features: [
+      "Feature-driven layered Flutter architecture with clean domain separation",
+      "Riverpod AsyncNotifier state management with generated functional providers",
+      "Dynamic prompt customization engine parsing placeholder tags (<topic>, <tone>, <style>)",
+      "Direct AI workflow integration launching ChatGPT and Google Gemini with customized prompts",
+      "Firestore cursor pagination and fallback queries for high-performance discovery feeds",
+      "Google Authentication with transactional username reservation and collision handling",
+      "Community prompt submission workflow with validation and Cloudinary media uploads",
+      "AdMob monetization engine with Native-to-Banner fallback and interstitial frequency control",
+      "Hive local caching for staggered masonry feed layouts to eliminate visual layout shifts",
+      "Automated test suite with 53 passing unit/widget tests and 0 Flutter analyzer warnings"
+    ],
+    imageUrl: "/images/projects/promptixa/1.png",
+    coverImages: [
+      "/images/projects/promptixa/1.png",
+      "/images/projects/promptixa/3.png",
+      "/images/projects/promptixa/2.png"
+    ],
+    screenshots: [
+      { src: "/images/projects/promptixa/1.png", alt: "Home & prompt discovery feed with masonry layout" },
+      { src: "/images/projects/promptixa/2.png", alt: "Explore categories with custom 3D artwork" },
+      { src: "/images/projects/promptixa/3.png", alt: "Dynamic prompt customization engine with ChatGPT integration" },
+      { src: "/images/projects/promptixa/4.png", alt: "Community prompt submission with tag parsing" },
+      { src: "/images/projects/promptixa/5.png", alt: "Saved favorites collection and local caching" }
+    ],
+    githubUrl: null,
+    liveUrl: links.promptixaPlayStore,
+    playStoreUrl: links.promptixaPlayStore,
+    webUrl: links.promptixaWeb,
+    hasCaseStudy: true,
+    problem: "AI users, developers, and creators frequently encounter friction when discovering, tailoring, and testing prompts across disparate LLM platforms. Standard prompt repositories lack real-time parameter customization, direct AI model integrations, and structured community collaboration.",
+    solution: "Architected and deployed Promptixa, a high-performance Flutter mobile and web community platform. Engineered a dynamic variable-parsing parser that automatically converts template placeholders (<topic>, <tone>, <context>) into interactive UI inputs, allowing users to customize and directly launch final prompts into ChatGPT and Gemini with a single tap.",
+    challenges: "Constructing an elastic template regex parser that dynamically binds user variables without UI stutter; executing atomic username reservations with Firestore transactions during Google Sign-In to prevent race conditions; and maintaining a smooth 60 FPS masonry feed by caching aspect ratios locally in Hive to prevent image layout shifts.",
+    outcome: "Successfully launched on Google Play and Web with a robust layered architecture, resilient AdMob monetization (Native -> Banner fallback), comprehensive Firestore security rules, and 53 automated unit/widget tests with zero static analyzer warnings.",
+    badges: ["Google Play", "AI Platform", "Community"],
+    metrics: [
+      { label: "Tests", value: "53 Passing" },
+      { label: "Analyzer", value: "0 Warnings" },
+      { label: "Platform", value: "Android & Web" }
+    ]
+  },
   {
     slug: "clvca",
     title: "CLVCA",
@@ -54,6 +113,8 @@ export const projects: Project[] = [
     ],
     githubUrl: null,
     liveUrl: links.clvcaPlayStore,
+    playStoreUrl: links.clvcaPlayStore,
+    webUrl: links.clvcaWeb,
     hasCaseStudy: true,
     problem: "Language barriers prevent seamless voice communication when participants do not share a common language.",
     solution: "Implemented on‑device translation combined with speech‑to‑text and text‑to‑speech pipelines, delivered through a peer‑to‑peer Flutter architecture.",
@@ -91,6 +152,8 @@ export const projects: Project[] = [
     ],
     githubUrl: links.whoKnowsSagarRepo,
     liveUrl: null,
+    playStoreUrl: null,
+    webUrl: null,
     hasCaseStudy: true,
     problem: "Creating an engaging, real‑time digital quiz for a family Haldi celebration.",
     solution: "Developed a Flutter Web application backed by Firebase Realtime Database, allowing guests to join via QR code, answer questions, and view live rankings.",
@@ -125,6 +188,8 @@ export const projects: Project[] = [
     ],
     githubUrl: links.expenseTrackerRepo,
     liveUrl: null,
+    playStoreUrl: null,
+    webUrl: null,
     hasCaseStudy: true,
     badges: ["Local Data Handling"]
   }

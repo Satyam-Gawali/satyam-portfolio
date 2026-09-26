@@ -1,63 +1,59 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { Cpu, Package } from "lucide-react";
+import { ArrowUpRight, Package, Terminal } from "lucide-react";
 import { GithubIcon } from "@/components/ui/Icons";
 import { packages } from "@/data/packages";
 import { SectionHeading } from "../ui/SectionHeading";
-import { TechBadge } from "../ui/TechBadge";
 
 export const OpenSource: React.FC = () => {
   return (
-    <section id="open-source" className="py-24 px-6 bg-brand-bg relative border-t border-brand-border/40 overflow-hidden">
-      {/* Subtle ambient lighting / radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand-cyan/5 blur-[120px] pointer-events-none rounded-full" />
+    <section id="open-source" className="py-24 px-6 bg-brand-bg relative border-t border-brand-border overflow-hidden">
+      {/* Subtle ambient lighting */}
+      <div className="absolute top-1/2 right-1/4 w-[500px] h-[300px] bg-brand-violet/5 blur-[140px] pointer-events-none rounded-full" />
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 space-y-16">
         <SectionHeading
           eyebrow="Open Source"
-          title="Open Source & Flutter Packages"
-          subtitle="Reusable tools built for the Flutter ecosystem, designed with a focus on code structure, flexibility, and developer experience."
+          title="Flutter Packages & Tooling"
+          subtitle="Reusable tools and UI libraries designed for the Flutter community with emphasis on type safety and flexibility."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {packages.map((pkg, index) => {
-            // Select top 3-4 key features for a compact, clean look
+          {packages.map((pkg) => {
             const topFeatures = pkg.features.slice(0, 4);
 
             return (
               <div
                 key={pkg.title}
-                className="flex flex-col justify-between p-6 rounded-2xl bg-brand-surface/80 backdrop-blur-md border border-brand-border hover:border-brand-cyan/40 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-brand-cyan/10 relative group"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="flex flex-col justify-between p-6 sm:p-8 rounded-[24px] bg-brand-surface/80 backdrop-blur-xl border border-brand-card-border hover:border-brand-border-focus transition-all duration-300 hover:-translate-y-1 shadow-2xl shadow-black/5 dark:shadow-black/50 group"
               >
-                {/* Floating glow behind card on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-cyan/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                <div className="space-y-4 relative z-10">
+                <div className="space-y-5">
                   {/* Package Header */}
-                  <div className="flex items-center space-x-3.5">
-                    <div className="transition-transform duration-300 group-hover:scale-105 shrink-0">
+                  <div className="flex items-center space-x-4">
+                    <div className="shrink-0 transition-transform duration-300 group-hover:scale-105">
                       {pkg.imageUrl ? (
                         <Image
                           src={pkg.imageUrl}
                           alt={`${pkg.title} logo`}
                           width={48}
                           height={48}
-                          className="w-11 h-11 rounded-xl border border-brand-border object-cover shadow-md"
+                          className="w-12 h-12 rounded-2xl border border-brand-card-border object-cover shadow-md"
                         />
                       ) : (
-                        <div className="w-11 h-11 rounded-xl bg-brand-cyan/10 border border-brand-cyan/25 flex items-center justify-center">
-                          <Package className="w-5 h-5 text-brand-cyan" />
+                        <div className="w-12 h-12 rounded-2xl bg-brand-violet/10 border border-brand-violet/25 flex items-center justify-center">
+                          <Package className="w-6 h-6 text-brand-violet-light" />
                         </div>
                       )}
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-brand-text-primary group-hover:text-brand-cyan transition-colors">
+                      <h3 className="text-xl font-bold text-brand-text-primary group-hover:text-brand-violet-light transition-colors">
                         {pkg.title}
                       </h3>
-                      <div className="flex items-center gap-1.5 pt-0.5">
+                      <div className="flex items-center gap-1.5 pt-1">
                         {pkg.technologies.map((tech) => (
-                          <span key={tech} className="text-[10px] font-mono text-brand-text-muted bg-brand-bg px-2 py-0.5 rounded border border-brand-border/60">
+                          <span key={tech} className="text-[10px] font-mono text-brand-text-muted bg-brand-pill-bg px-2 py-0.5 rounded-full border border-brand-pill-border">
                             {tech}
                           </span>
                         ))}
@@ -65,17 +61,17 @@ export const OpenSource: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Description - Compact (max 2 lines) */}
-                  <p className="text-xs sm:text-sm text-brand-text-secondary leading-relaxed line-clamp-2">
+                  {/* Description */}
+                  <p className="text-sm text-brand-text-secondary leading-relaxed">
                     {pkg.description}
                   </p>
 
-                  {/* Key Features List (3-4 items max) */}
-                  <div className="space-y-1.5 pt-1">
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1.5 text-xs text-brand-text-secondary">
+                  {/* Key Features List */}
+                  <div className="space-y-2 pt-1">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2 text-xs text-brand-text-secondary">
                       {topFeatures.map((feature) => (
                         <li key={feature} className="flex items-center space-x-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-brand-cyan shrink-0"></span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-violet-light shrink-0" />
                           <span className="line-clamp-1">{feature}</span>
                         </li>
                       ))}
@@ -84,16 +80,17 @@ export const OpenSource: React.FC = () => {
                 </div>
 
                 {/* Actions Footer */}
-                <div className="flex items-center gap-3 pt-5 mt-5 border-t border-brand-border/40 relative z-10">
+                <div className="flex items-center gap-3 pt-6 mt-6 border-t border-brand-border">
                   {pkg.pubUrl && (
                     <a
                       href={pkg.pubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-brand-cyan text-brand-bg text-xs font-bold hover:bg-brand-cyan/90 transition-all shadow-md shadow-brand-cyan/10 active:scale-95"
+                      className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-brand-primary-btn-bg text-brand-primary-btn-text text-xs font-bold hover:opacity-90 transition-all shadow-md shadow-black/5 dark:shadow-white/5"
                     >
-                      <Cpu className="w-3.5 h-3.5" />
-                      <span>View on pub.dev</span>
+                      <Terminal className="w-3.5 h-3.5" />
+                      <span>Pub.dev</span>
+                      <ArrowUpRight className="w-3 h-3" />
                     </a>
                   )}
                   {pkg.githubUrl && (
@@ -101,7 +98,7 @@ export const OpenSource: React.FC = () => {
                       href={pkg.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-brand-bg border border-brand-border text-xs font-semibold text-brand-text-secondary hover:text-brand-text-primary hover:border-brand-cyan/30 transition-all active:scale-95"
+                      className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-brand-pill-bg border border-brand-card-border text-xs font-semibold text-brand-text-secondary hover:text-brand-text-primary hover:bg-brand-surface-hover transition-all"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
                       <span>GitHub</span>
